@@ -3,14 +3,16 @@
 ifndef BIN_NAME
     BIN_NAME = beetle_finder_go_server
 endif
+ifndef BIN_PATH
+    BIN_PATH := ./bin
+endif
+BIN := $(BIN_PATH)/$(BIN_NAME)
 
 GOOS := $(GOOS)
 GOARCH := $(GOARCH)
 
 SRC_PATH := ./src
 SRC := $(SRC_PATH)/...
-BIN_PATH := ./bin
-BIN := $(BIN_PATH)/$(BIN_NAME)
 
 all: build
 
@@ -35,4 +37,4 @@ run:
 	@go run $(SRC_PATH)/main.go
 
 test:
-	@go test -v --race --covermode=atomic $(SRC)
+	@go test -v --race --covermode=atomic --coverprofile=coverage.txt $(SRC)
