@@ -30,7 +30,7 @@ func New(db interface{}) goctx.Context {
 func DB(ctx goctx.Context) interface{} {
 	db, ok := ctx.Value(KeyDB).(interface{})
 	if !ok {
-		log.Fatalf("context: has no db")
+		log.Fatalf("TODO: change string to internal error")
 	}
 
 	return db
