@@ -17,7 +17,7 @@ SRC := $(SRC_PATH)/...
 ifndef CONN_STR
     CONN_STR := postgres://postgres:postgres@localhost:5432
 endif
-RECREATE_SQL := ./db/sql/develop/recreate_develop.sql
+RECREATE_SQL := $(SRC_PATH)/db/sql/develop/recreate_develop.sql
 
 all: build
 
