@@ -14,6 +14,11 @@ GOARCH := $(GOARCH)
 SRC_PATH := ./src
 SRC := $(SRC_PATH)/...
 
+ifndef CONN_STR
+    CONN_STR := postgres://postgres:postgres@localhost:5432
+endif
+RECREATE_FILE := ./db/sql/develop/recreate_develop.sql
+
 all: build
 
 get:
@@ -38,3 +43,6 @@ run:
 
 test:
 	@go test -v --race --covermode=atomic --coverprofile=coverage.txt $(SRC)
+
+recreate:
+	@psql -f $(RECREATE_FILE) $(CONN_STR)
