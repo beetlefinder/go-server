@@ -25,10 +25,10 @@ get:
 	@go get -v $(SRC)
 	@go get -v golang.org/x/lint/golint
 
-vet: get
+vet:
 	@go vet $(SRC)
 
-golint: vet
+golint:
 	@golint $(SRC)
 
 gofmt: golint
