@@ -17,6 +17,12 @@ make
 make run
 ```
 
+## Create or recreate dev DB
+
+```sh
+make recreate
+```
+
 [godoc]: https://godoc.org/github.com/beetlefinder/go-server
 [travis]: https://travis-ci.org/beetlefinder/go-server
 [codecov]: https://codecov.io/gh/beetlefinder/go-server
