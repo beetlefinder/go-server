@@ -5,10 +5,9 @@ go:
 
 go_import_path: github.com/beetlefinder/go-server
 
-before_install:
-  - make build
-
 script:
+  - make get
+  - make build
   - make test
 
 after_success:

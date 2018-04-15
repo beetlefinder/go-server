@@ -28,7 +28,7 @@ get:
 vet:
 	@go vet $(SRC)
 
-golint:
+golint: vet
 	@golint $(SRC)
 
 gofmt: golint
