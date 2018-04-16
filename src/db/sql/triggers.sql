@@ -8,8 +8,12 @@ BEGIN
         NEW.is_deleted := TRUE;
         NEW.deleted_at := NOW();
     END IF;
+
     NEW.updated_at := NOW();
-    NEW.created_at := OLD.created_at;
+
+    IF (TG_OP != 'INSERT') THEN
+        NEW.created_at := OLD.created_at;
+    END IF;
 
     RETURN NEW;
 END;
@@ -25,8 +29,12 @@ BEGIN
         NEW.is_deleted := TRUE;
         NEW.deleted_at := NOW();
     END IF;
+
     NEW.updated_at := NOW();
-    NEW.created_at := OLD.created_at;
+
+    IF (TG_OP != 'INSERT') THEN
+        NEW.created_at := OLD.created_at;
+    END IF;
 
     RETURN NEW;
 END;
