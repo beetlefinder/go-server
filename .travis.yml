@@ -1,15 +1,9 @@
 language: go
 
-go:
-  - 1.10.x
+go: "1.10"
 
-go_import_path: github.com/beetlefinder/go-server
-
-before_install:
-  - make build
-
-script:
-  - make test
+install: make get
 
 after_success:
+  - make test
   - bash <(curl -s https://codecov.io/bash)
