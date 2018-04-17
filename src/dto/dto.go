@@ -5,3 +5,18 @@
 // Package dto provides data containers (DTO pattern)
 // to transfer information between server and DB.
 package dto
+
+import "github.com/jinzhu/gorm"
+
+// User describes user data.
+type User struct {
+	gorm.Model
+	Nick string
+}
+
+// Auth describes authentication data.
+type Auth struct {
+	gorm.Model
+	Login        string
+	PasswordHash string
+}
