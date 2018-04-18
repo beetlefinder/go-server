@@ -4,7 +4,7 @@
 *.dll
 *.so
 *.dylib
-/bin
+beetle_finder_go_server
 
 # Test
 *.test
