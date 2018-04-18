@@ -7,6 +7,8 @@ package context
 import (
 	goctx "context"
 	"log"
+
+	"github.com/beetlefinder/go-server/db"
 )
 
 type key int
@@ -16,10 +18,8 @@ const (
 	KeyDB key = iota
 )
 
-// TODO: change `interface{}` to DB struct when realized.
-
 // New initializes base context.
-func New(db interface{}) goctx.Context {
+func New(db *db.DB) goctx.Context {
 	ctx := goctx.Background()
 	ctx = goctx.WithValue(ctx, KeyDB, db)
 
@@ -27,11 +27,11 @@ func New(db interface{}) goctx.Context {
 }
 
 // DB returns db instance by ctx.
-func DB(ctx goctx.Context) interface{} {
-	db, ok := ctx.Value(KeyDB).(interface{})
+func DB(ctx goctx.Context) *db.DB {
+	ctxDB, ok := ctx.Value(KeyDB).(*db.DB)
 	if !ok {
 		log.Fatalf("TODO: change string to internal error")
 	}
 
-	return db
+	return ctxDB
 }
