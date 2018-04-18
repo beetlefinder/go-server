@@ -8,7 +8,7 @@ import (
 	goctx "context"
 	"log"
 
-	"github.com/beetlefinder/go-server/src/db"
+	"github.com/beetlefinder/go-server/db"
 )
 
 type key int

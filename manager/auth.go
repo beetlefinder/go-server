@@ -7,7 +7,7 @@ package manager
 import (
 	goctx "context"
 
-	"github.com/beetlefinder/go-server/src/dto"
+	"github.com/beetlefinder/go-server/dto"
 )
 
 // Auth is a authentication manager.

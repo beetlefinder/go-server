@@ -8,8 +8,8 @@ import (
 	goctx "context"
 	"fmt"
 
-	"github.com/beetlefinder/go-server/src/context"
-	"github.com/beetlefinder/go-server/src/dto"
+	"github.com/beetlefinder/go-server/context"
+	"github.com/beetlefinder/go-server/dto"
 )
 
 // User is a user manager.
