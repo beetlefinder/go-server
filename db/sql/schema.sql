@@ -5,6 +5,7 @@
 CREATE TABLE public.user (
     id          SERIAL      PRIMARY KEY CHECK(id > 0),
     nick        TEXT        NOT NULL,
+    is_deleted  BOOLEAN     NOT NULL DEFAULT FALSE,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     deleted_at  TIMESTAMPTZ
@@ -14,6 +15,17 @@ CREATE TABLE public.auth_data (
     id          INTEGER     REFERENCES public.user(id),
     login       TEXT        NOT NULL,
     pass_hash   TEXT        NOT NULL,
+    is_deleted  BOOLEAN     NOT NULL DEFAULT FALSE,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    deleted_at  TIMESTAMPTZ
+);
+
+CREATE TABLE public.alert (
+    id          SERIAL      PRIMARY KEY CHECK(id > 0),
+    user_id     INTEGER     NOT NULL REFERENCES public.user(id),
+    message     TEXT,
+    is_deleted  BOOLEAN     NOT NULL DEFAULT FALSE,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     deleted_at  TIMESTAMPTZ
