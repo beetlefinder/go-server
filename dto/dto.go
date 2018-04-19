@@ -24,6 +24,6 @@ type Auth struct {
 // Alert describes alert information.
 type Alert struct {
 	gorm.Model
-	IDUser  uint
+	UserID  uint
 	Message string
 }
