@@ -71,6 +71,26 @@ Parameters by default:
 
 * CONN_STR=postgres://postgres:postgres@localhost:5432
 
+## Contributing
+
+Set up git to translate CRLF to LF:
+
+```sh
+git config core.autocrlf input
+```
+
+or to global config if it's ok for you:
+
+```sh
+git config --global core.autocrlf input
+```
+
+In every commit message specify GitHub issue number using `#`:
+
+```text
+#42 Answerd to The Ultimate Question of Life, the Universe, and Everything
+```
+
 [godoc]: https://godoc.org/github.com/beetlefinder/go-server
 [travis]: https://travis-ci.org/beetlefinder/go-server
 [codecov]: https://codecov.io/gh/beetlefinder/go-server
