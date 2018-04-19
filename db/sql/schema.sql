@@ -20,3 +20,13 @@ CREATE TABLE public.auth (
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     deleted_at  TIMESTAMPTZ
 );
+
+CREATE TABLE public.alert (
+    id          SERIAL      PRIMARY KEY CHECK(id > 0),
+    id_user     INTEGER     NOT NULL REFERENCES public.user(id),
+    message     TEXT,   
+    is_deleted  BOOLEAN     NOT NULL DEFAULT FALSE,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    deleted_at  TIMESTAMPTZ
+);
