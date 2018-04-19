@@ -12,11 +12,16 @@ Server for beetlefinder alert service.
 * Go 1.10 (but 1.6+ should be ok)
 * PostgreSQL 10 (but 9+ should be ok)
 
-For developers it's recommended to create PostgreSQL user with login `postgres` and password `postgres` and make it able on `localhost:5432`. Or every time use `make recreate` with `CONN_STR=postgres://custom:12345678@localhost:5432`.
-
 ## Installation
 
-`%GOPATH%` for Windows and `$GOPATH` for Unix-style OS (Linux, Mac).
+> `%GOPATH%` for Windows and `$GOPATH` for Unix-style OS (Linux, Mac).
+>
+> For developers it's recommended to create PostgreSQL user with login `postgres` and password `postgres` and make it able on `localhost:5432`. Or every time use `make recreate` with `CONN_STR=postgres://custom:12345678@localhost:5432`. Be sure path to <PostgreSQL_install_folder>/bin in your PATH variable. For example for Windows users: `C:\Program Files\PostgreSQL\10\bin`.
+>
+> Before installing be sure you set up Go variables:
+>
+> * GOPATH and GOROOT system variables
+> * GOPATH, GOROOT and GOPATH/bin in PATH
 
 ```sh
 go get github.com/beetlefinder/go-server
@@ -37,13 +42,12 @@ make
 Or with parameters:
 
 ```sh
-make BIN_NAME=main BIN_PATH=./
+make BIN=./bin/main.exe
 ```
 
 Parameters by default:
 
-* BIN_NAME=beetle_finder_go_server
-* BIN_PATH=./bin
+* BIN=beetle_finder_go_server
 
 ## Run
 

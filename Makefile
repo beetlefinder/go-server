@@ -3,8 +3,8 @@
 GOOS := $(GOOS)
 GOARCH := $(GOARCH)
 
-ifndef BIN_NAME
-    BIN_NAME = beetle_finder_go_server
+ifndef BIN
+    BIN = beetle_finder_go_server
 endif
 
 SRC_PATH := .
@@ -32,7 +32,7 @@ gofmt: golint
 	@gofmt -l $(SRC_PATH)
 
 build: gofmt
-	@go build -o $(BIN_NAME) -v $(SRC_PATH)
+	@go build -o $(BIN) -v $(SRC_PATH)
 
 run:
 	@go run $(SRC_RUN)
