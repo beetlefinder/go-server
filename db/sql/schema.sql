@@ -11,7 +11,7 @@ CREATE TABLE public.user (
     deleted_at  TIMESTAMPTZ
 );
 
-CREATE TABLE public.auth_data (
+CREATE TABLE public.auth (
     id          INTEGER     REFERENCES public.user(id),
     login       TEXT        NOT NULL,
     pass_hash   TEXT        NOT NULL,

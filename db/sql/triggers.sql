@@ -40,7 +40,7 @@ BEGIN
 END;
 $auth_data_changed$ LANGUAGE plpgsql;
 
-CREATE TRIGGER auth_data_changed BEFORE INSERT OR UPDATE OR DELETE ON public.auth_data
+CREATE TRIGGER auth_data_changed BEFORE INSERT OR UPDATE OR DELETE ON public.auth
     FOR EACH ROW EXECUTE PROCEDURE auth_data_changed();
 
 
