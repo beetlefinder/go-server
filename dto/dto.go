@@ -20,3 +20,10 @@ type Auth struct {
 	Login        string
 	PasswordHash string
 }
+
+// Alert describes alert information.
+type Alert struct {
+	gorm.Model
+	UserID  uint
+	Message string
+}
