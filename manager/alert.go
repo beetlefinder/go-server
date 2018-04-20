@@ -16,6 +16,8 @@ import (
 type Alert struct{}
 
 // Create creates new alert in db by userID and message.
+//
+// TODO: create method should return created dto.
 func (a Alert) Create(ctx goctx.Context, userID uint, message string) error {
 	db := context.DB(ctx).Table("alert")
 

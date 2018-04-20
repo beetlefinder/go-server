@@ -13,6 +13,13 @@ import (
 // Auth is a authentication manager.
 type Auth struct{}
 
+// Create .
+//
+// TODO: create method should return created dto.
+func (a Auth) Create(ctx goctx.Context, login string, passHash string) error {
+	return nil
+}
+
 // GetByLogin .
 func (a Auth) GetByLogin(ctx goctx.Context, login string) dto.Auth {
 	return dto.Auth{}
