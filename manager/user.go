@@ -17,15 +17,15 @@ import (
 type User struct{}
 
 // Create creates new user in DB by email and nick.
-func (u User) Create(ctx goctx.Context, login string, pass string, nick string) error {
+func (u User) Create(ctx goctx.Context, login string, pass string, nick string) (*dto.User, error) {
 	db := context.DB(ctx)
 	users := db.Table("user")
 	auths := db.Table("auth")
 
 	auth := Auth{}
 	if auth.GetByLogin(ctx, login).Login != "" {
-		// TODO: rewrite to common error handling when realized.
-		return fmt.Errorf("user already exists")
+		// TODO: refactor to common error handling when realized.
+		return nil, fmt.Errorf("user already exists")
 	}
 
 	// TODO: make data verification.
@@ -38,7 +38,8 @@ func (u User) Create(ctx goctx.Context, login string, pass string, nick string) 
 		fmt.Sprintf("%s", sha256.Sum256([]byte(pass))),
 	})
 
-	return nil
+	// TODO: return created user.
+	return nil, nil
 }
 
 // GetByID gets user from DB by ID.
