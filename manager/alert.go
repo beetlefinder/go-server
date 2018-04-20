@@ -20,10 +20,12 @@ func (a Alert) Create(ctx goctx.Context, userID uint, message string) error {
 	db := context.DB(ctx).Table("alert")
 
 	u := User{}
+	// TODO: error handling.
 	if _, ok := u.GetByID(ctx, userID); !ok {
 		return fmt.Errorf("User dosen't exists")
 	}
 
+	// TODO: refactor hardcoded struct.
 	db.Create(struct {
 		UserID  uint
 		Message string
@@ -40,22 +42,11 @@ func (Alert) GetByID(ctx goctx.Context, id uint) (*dto.Alert, bool) {
 }
 
 // GetList gets alerts from db by userID.
-func (Alert) GetList(ctx goctx.Context, userID uint) ([]*dto.Alert, error) {
-	var count int
-	rows, err := context.DB(ctx).Table("alert").Where("user_id = ?", userID).Count(&count).Rows()
-	if err != nil {
-		return nil, err
-	}
+func (Alert) GetList(ctx goctx.Context, userID uint) []dto.Alert {
+	alerts := context.DB(ctx).Table("alert")
 
-	alerts := make([]*dto.Alert, count)
-	for rows.Next() {
-		alert := new(dto.Alert)
-		err = rows.Scan(alert.ID, alert.UserID, alert.Message, alert.CreatedAt, alert.UpdatedAt, alert.DeletedAt)
-		if err != nil {
-			return alerts, err
-		}
-		alerts = append(alerts, alert)
-	}
+	var res []dto.Alert
+	alerts.Where("user_id = ?", userID).Find(&res)
 
-	return alerts, nil
+	return res
 }
