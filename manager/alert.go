@@ -5,7 +5,6 @@
 package manager
 
 import (
-	"container/list"
 	goctx "context"
 	"fmt"
 
@@ -40,22 +39,22 @@ func (Alert) GetByID(ctx goctx.Context, id uint) (*dto.Alert, bool) {
 	return &alert, alert.ID != 0
 }
 
-// GetList gets all alerts from db.
-func (Alert) GetList(ctx goctx.Context) (*list.List, error) {
-	alerts := list.New()
-
-	rows, err := context.DB(ctx).Table("alert").Rows()
+// GetList gets alerts from db by userID.
+func (Alert) GetList(ctx goctx.Context, userID uint) ([]*dto.Alert, error) {
+	var count int
+	rows, err := context.DB(ctx).Table("alert").Where("user_id = ?", userID).Count(&count).Rows()
 	if err != nil {
 		return nil, err
 	}
 
+	alerts := make([]*dto.Alert, count)
 	for rows.Next() {
-		alert := dto.Alert{}
+		alert := new(dto.Alert)
 		err = rows.Scan(alert.ID, alert.UserID, alert.Message, alert.CreatedAt, alert.UpdatedAt, alert.DeletedAt)
 		if err != nil {
 			return alerts, err
 		}
-		alerts.PushBack(alert)
+		alerts = append(alerts, alert)
 	}
 
 	return alerts, nil
