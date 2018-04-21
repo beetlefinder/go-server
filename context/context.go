@@ -30,7 +30,8 @@ func New(db *db.DB) goctx.Context {
 func DB(ctx goctx.Context) *db.DB {
 	ctxDB, ok := ctx.Value(KeyDB).(*db.DB)
 	if !ok {
-		log.Fatalf("TODO: change string to internal error")
+		// TODO: error handling.
+		log.Fatalf("no DB in context")
 	}
 
 	return ctxDB
