@@ -22,8 +22,7 @@ func (u User) Create(ctx goctx.Context, login string, pass string, nick string) 
 	users := db.Table("user")
 	auths := db.Table("auth")
 
-	auth := Auth{}
-	if auth.GetByLogin(ctx, login).Login != "" {
+	if _, ok := new(Auth).GetByLogin(ctx, login); !ok {
 		// TODO: rewrite to common error handling when realized.
 		return fmt.Errorf("user already exists")
 	}
