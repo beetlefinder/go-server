@@ -39,6 +39,4 @@ func (User) Create(ctx goctx.Context) gin.HandlerFunc {
 		c.JSON(http.StatusOK, gin.H{"user": res})
 		return
 	}
-
-	return nil
 }
