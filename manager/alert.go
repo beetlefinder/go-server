@@ -27,11 +27,13 @@ func (a Alert) Create(ctx goctx.Context, userID uint, message string) error {
 		return fmt.Errorf("User dosen't exists")
 	}
 
-	// TODO: refactor hardcoded struct.
-	db.Create(struct {
-		UserID  uint
-		Message string
-	}{userID, message})
+	// TODO: it will be fuck up here - string can't be nil.
+	alert := dto.Alert{
+		UserID:  userID,
+		Message: message,
+	}
+	db.Create(&alert)
+
 	return nil
 }
 
