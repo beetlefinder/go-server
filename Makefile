@@ -4,12 +4,20 @@ GOOS := $(GOOS)
 GOARCH := $(GOARCH)
 
 ifndef BIN
-    BIN = beetle_finder_go_server
+    BIN = beetlefinder_go_server
+    ifndef GOOS
+        ifeq ($(OS), Windows_NT)
+            BIN := $(BIN).exe
+        endif
+    endif
+    ifeq ($(GOOS), windows)
+        BIN := $(BIN).exe
+    endif
 endif
 
 SRC_PATH := .
 SRC := $(SRC_PATH)/...
-SRC_RUN := $(SRC_PATH)/main.go
+SRC_RUN := $(SRC_PATH)/main.go $(SRC_PATH)/server.go
 
 ifndef CONN_STR
     CONN_STR := postgres://postgres:postgres@localhost:5432
@@ -21,6 +29,7 @@ all: build
 get:
 	@go get -v $(SRC)
 	@go get -v golang.org/x/lint/golint
+	@go get -v github.com/githubnemo/CompileDaemon
 
 vet:
 	@go vet $(SRC)
@@ -36,6 +45,9 @@ build: gofmt
 
 run:
 	@go run $(SRC_RUN)
+
+daemon:
+	@CompileDaemon -include=Makefile -build="make BIN=$(BIN)" -command="./$(BIN)"
 
 test:
 	@go test -v --race --covermode=atomic --coverprofile=coverage.txt $(SRC)
