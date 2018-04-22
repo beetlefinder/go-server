@@ -16,15 +16,13 @@ import (
 type Alert struct{}
 
 // Create creates new alert in db by userID and message.
-//
-// TODO: create method should return created dto.
-func (a Alert) Create(ctx goctx.Context, userID uint, message string) error {
+func (a Alert) Create(ctx goctx.Context, userID uint, message string) (*dto.Alert, error) {
 	db := context.DB(ctx).Table("alert")
 
 	u := User{}
 	// TODO: error handling.
 	if _, ok := u.GetByID(ctx, userID); !ok {
-		return fmt.Errorf("User dosen't exists")
+		return nil, fmt.Errorf("User dosen't exists")
 	}
 
 	// TODO: it will be fuck up here - string can't be nil.
@@ -34,7 +32,8 @@ func (a Alert) Create(ctx goctx.Context, userID uint, message string) error {
 	}
 	db.Create(&alert)
 
-	return nil
+	// TODO: return created alert.
+	return nil, nil
 }
 
 // GetByID gets alert from db by ID.
