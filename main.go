@@ -4,8 +4,10 @@
 
 package main
 
-import "fmt"
-
 func main() {
-	fmt.Printf("Hello World!")
+	start(
+		"80",
+		"postgres",
+		"postgresql://postgres:postgres@localhost:5432/beetlefinder?sslmode=disable",
+	)
 }
