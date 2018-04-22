@@ -7,8 +7,7 @@ package controller
 import (
 	goctx "context"
 	"net/http"
-
-	"github.com/beetlefinder/go-server/dto"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 
@@ -20,6 +19,8 @@ import (
 type User struct{}
 
 // Create handlerFunc for create user.
+//
+// JSON struct as parameter.
 func (User) Create(ctx goctx.Context) gin.HandlerFunc {
 	users := manager.User{}
 
@@ -43,21 +44,26 @@ func (User) Create(ctx goctx.Context) gin.HandlerFunc {
 	}
 }
 
-// Get handlerFunc for get user by id.
+// Get returns handler for user getting.
+//
+// One uint /:id parameter.
 func (User) Get(ctx goctx.Context) gin.HandlerFunc {
 	users := manager.User{}
 
 	return func(c *gin.Context) {
-		user := dto.User{}
-		c.BindQuery(&user)
+		id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+		if err != nil {
+			c.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
 
-		res, ok := users.GetByID(ctx, user.ID)
+		res, ok := users.GetByID(ctx, uint(id))
 		if !ok {
 			c.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"nick": res.Nick})
+		c.JSON(http.StatusOK, gin.H{"user": res})
 		return
 	}
 }
