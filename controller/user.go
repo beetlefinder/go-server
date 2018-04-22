@@ -8,6 +8,8 @@ import (
 	goctx "context"
 	"net/http"
 
+	"github.com/beetlefinder/go-server/dto"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/beetlefinder/go-server/manager"
@@ -17,7 +19,7 @@ import (
 // in context of user changing / getting.
 type User struct{}
 
-// Create .
+// Create handlerFunc for create user.
 func (User) Create(ctx goctx.Context) gin.HandlerFunc {
 	users := manager.User{}
 
@@ -37,6 +39,25 @@ func (User) Create(ctx goctx.Context) gin.HandlerFunc {
 		}
 
 		c.JSON(http.StatusOK, gin.H{"user": res})
+		return
+	}
+}
+
+// Get handlerFunc for get user by id.
+func (User) Get(ctx goctx.Context) gin.HandlerFunc {
+	users := manager.User{}
+
+	return func(c *gin.Context) {
+		user := dto.User{}
+		c.BindQuery(&user)
+
+		res, ok := users.GetByID(ctx, user.ID)
+		if !ok {
+			c.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"nick": res.Nick})
 		return
 	}
 }
