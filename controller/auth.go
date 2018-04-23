@@ -29,7 +29,11 @@ func (Auth) Authorize(ctx goctx.Context) gin.HandlerFunc {
 		c.BindQuery(&auth)
 
 		res, ok := auths.GetByLogin(ctx, auth.Login)
-		if !ok || bcrypt.CompareHashAndPassword([]byte(res.PasswordHash), []byte(auth.Pass)) != nil {
+		passValidity := bcrypt.CompareHashAndPassword(
+			[]byte(res.PassHash),
+			[]byte(auth.Pass),
+		)
+		if !ok || passValidity != nil {
 			c.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}

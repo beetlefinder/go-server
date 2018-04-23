@@ -9,6 +9,7 @@ import (
 
 	"github.com/beetlefinder/go-server/context"
 	"github.com/beetlefinder/go-server/dto"
+	"github.com/jinzhu/gorm"
 )
 
 // Auth is a authentication manager.
@@ -16,16 +17,16 @@ type Auth struct{}
 
 // Create .
 //
-// TODO: create method should return created dto.
-func (a Auth) Create(ctx goctx.Context, login string, passHash string) error {
+// Auth create method should not return created dto.
+func (a Auth) Create(ctx goctx.Context, userID uint, login string, passHash string) error {
 	auths := context.DB(ctx).Table("auth")
 
 	// TODO: verification here or at user creation?
 	auth := dto.Auth{
-		Login:        login,
-		PasswordHash: passHash,
+		Model:    gorm.Model{ID: userID},
+		Login:    login,
+		PassHash: passHash,
 	}
-
 	auths.Create(&auth)
 
 	return nil
@@ -33,7 +34,7 @@ func (a Auth) Create(ctx goctx.Context, login string, passHash string) error {
 
 // GetByLogin .
 func (a Auth) GetByLogin(ctx goctx.Context, login string) (*dto.Auth, bool) {
-	auth := dto.Auth{Login: login}
+	auth := dto.Auth{}
 	context.DB(ctx).Table("auth").Where("login = ?", login).First(&auth)
 
 	return &auth, auth.ID != 0

@@ -17,8 +17,8 @@ type User struct {
 // Auth describes authentication data.
 type Auth struct {
 	gorm.Model
-	Login        string
-	PasswordHash string
+	Login    string
+	PassHash string
 }
 
 // Alert describes alert information.

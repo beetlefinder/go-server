@@ -39,7 +39,7 @@ func (User) Create(ctx goctx.Context) gin.HandlerFunc {
 			Pass  string
 			Nick  string
 		}{}
-		c.BindQuery(&user)
+		c.BindJSON(&user)
 
 		res, err := users.Create(ctx, user.Login, user.Pass, user.Nick)
 		if err != nil {

@@ -6,8 +6,9 @@ package manager
 
 import (
 	goctx "context"
-	"crypto/sha256"
 	"fmt"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/beetlefinder/go-server/context"
 	"github.com/beetlefinder/go-server/dto"
@@ -20,25 +21,24 @@ type User struct{}
 func (u User) Create(ctx goctx.Context, login string, pass string, nick string) (*dto.User, error) {
 	db := context.DB(ctx)
 	users := db.Table("user")
-	auths := db.Table("auth")
 
-	if _, ok := new(Auth).GetByLogin(ctx, login); !ok {
+	if _, ok := new(Auth).GetByLogin(ctx, login); ok {
 		// TODO: rewrite to common error handling when realized.
 		return nil, fmt.Errorf("user already exists")
 	}
 
 	// TODO: make data verification.
-	users.Create(struct{ Nick string }{nick})
-	auths.Create(struct {
-		Login    string
-		PassHash string
-	}{
-		login,
-		fmt.Sprintf("%s", sha256.Sum256([]byte(pass))),
-	})
+	user := dto.User{Nick: nick}
+	users.Create(&user)
+	passHash, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
+	if err != nil {
+		return nil, err
+	}
+	if err = new(Auth).Create(ctx, user.ID, login, string(passHash)); err != nil {
+		return nil, err
+	}
 
-	// TODO: return created user.
-	return nil, nil
+	return &user, nil
 }
 
 // GetByID gets user from DB by ID.
