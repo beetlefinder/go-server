@@ -1,10 +1,11 @@
 # Binaries
 *.a
 *.exe
+*.exe~
 *.dll
 *.so
 *.dylib
-beetle_finder_go_server
+go-server
 
 # Test
 *.test

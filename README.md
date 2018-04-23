@@ -28,7 +28,6 @@ go get github.com/beetlefinder/go-server
 cd %GOPATH%/src/github.com/beetlefinder/go-server
 make get
 make recreate
-make
 ```
 
 `make` command depends on `make get` (one time at installation only), so don't skip `make get` command.
@@ -42,20 +41,20 @@ make
 Or with parameters:
 
 ```sh
-make BIN=./bin/main.exe
+make GOOS=linux GOARCH=amd64
 ```
 
-Parameters by default:
-
-* BIN=beetle_finder_go_server
+where `GOOS` and `GOARCH` is a Golang variables. By default it equals your system configuration.
 
 ## Run
+
+Daemon run with hot loading sources (you don't need to rebuild app after source changing):
 
 ```sh
 make run
 ```
 
-## Create or recreate dev DB
+## Create or Recreate Dev DB
 
 ```sh
 make recreate
@@ -73,6 +72,28 @@ Parameters by default:
 
 ## Contributing
 
+### Source Checking
+
+Before every commit run:
+
+```sh
+make
+make format
+make test
+```
+
+If you see some info after `make` or `make format` then something WRONG with sources. **Don't commit while understand what's happened and fix it.**
+
+You can run one command instead:
+
+```sh
+make; make format; make test
+```
+
+### Line Ending
+
+**Check line ending before add new file - it must be `LF`.**
+
 Set up git to translate CRLF to LF:
 
 ```sh
@@ -85,10 +106,12 @@ or to global config if it's ok for you:
 git config --global core.autocrlf input
 ```
 
-In every commit message specify GitHub issue number using `#`:
+### Commit Message
+
+In every commit message specify GitHub issue number using `#` if enable:
 
 ```text
-#42 Answerd to The Ultimate Question of Life, the Universe, and Everything
+#42 Answered to The Ultimate Question of Life, the Universe, and Everything
 ```
 
 [godoc]: https://godoc.org/github.com/beetlefinder/go-server
