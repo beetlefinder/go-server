@@ -5,9 +5,7 @@
 package main
 
 import (
-	goctx "context"
 	"fmt"
-	"log"
 
 	"github.com/gin-gonic/gin"
 
@@ -17,23 +15,11 @@ import (
 )
 
 func start(port string, driver string, conn string) {
-	database := db.Connect(driver, conn)
-	ctx := context.New(database)
+	db := db.Connect(driver, conn)
+	ctx := context.New(db)
 
 	app := gin.Default()
-	api{}.route(ctx, app)
+	controller.User{}.Route(ctx, app)
 
-	fullPort := fmt.Sprintf(":%s", port)
-	if err := app.Run(fullPort); err != nil {
-		log.Fatal(err)
-	}
-}
-
-type api struct{}
-
-func (api) route(ctx goctx.Context, app *gin.Engine) {
-	user := controller.User{}
-	userURI := app.Group("/user")
-	userURI.POST("/", user.Create(ctx))
-	userURI.GET("/:id", user.Get(ctx))
+	app.Run(fmt.Sprintf(":%s", port))
 }

@@ -18,6 +18,14 @@ import (
 // in context of user changing / getting.
 type User struct{}
 
+// Route implements Controller interface.
+func (user User) Route(ctx goctx.Context, app *gin.Engine) {
+	userURI := app.Group("/user")
+
+	userURI.POST("/", user.Create(ctx))
+	userURI.GET("/:id", user.Get(ctx))
+}
+
 // Create handlerFunc for create user.
 //
 // JSON struct as parameter.
