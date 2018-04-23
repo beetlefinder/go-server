@@ -1,9 +1,8 @@
 language: go
-
 go: "1.10"
 
 install: make get
+script: make complex
 
 after_success:
-  - make test
   - bash <(curl -s https://codecov.io/bash)

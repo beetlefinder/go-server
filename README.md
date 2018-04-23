@@ -77,18 +77,10 @@ Parameters by default:
 Before every commit run:
 
 ```sh
-make
-make format
-make test
+make complex
 ```
 
-If you see some info after `make` or `make format` then something WRONG with sources. **Don't commit while understand what's happened and fix it.**
-
-You can run one command instead:
-
-```sh
-make; make format; make test
-```
+If you see some info excluding test output then something WRONG with sources. **Don't commit while understand what's happened and fix it.**
 
 ### Line Ending
 

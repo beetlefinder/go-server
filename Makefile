@@ -40,5 +40,7 @@ run:
 test:
 	@go test -v --race --covermode=atomic --coverprofile=coverage.txt $(SRC)
 
+complex: build format test
+
 recreate:
 	@psql -f $(RECREATE_SQL) $(CONN_STR)
