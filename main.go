@@ -4,10 +4,27 @@
 
 package main
 
+import (
+	"fmt"
+
+	"github.com/beetlefinder/go-server/config"
+	"github.com/beetlefinder/go-server/context"
+	"github.com/beetlefinder/go-server/controller"
+	"github.com/beetlefinder/go-server/db"
+	"github.com/gin-gonic/gin"
+)
+
 func main() {
-	start(
-		"80",
-		"postgres",
-		"postgresql://postgres:postgres@localhost:5432/beetlefinder?sslmode=disable",
-	)
+	cfg := config.Parse("./config/config.yml")
+	start(cfg.Port, cfg.Driver, cfg.DBConnStr)
+}
+
+func start(port string, driver string, conn string) {
+	db := db.Connect(driver, conn)
+	ctx := context.New(db)
+
+	app := gin.Default()
+	controller.User{}.Route(ctx, app)
+
+	app.Run(fmt.Sprintf(":%s", port))
 }

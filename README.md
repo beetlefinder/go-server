@@ -32,6 +32,8 @@ make recreate
 
 `make` command depends on `make get` (one time at installation only), so don't skip `make get` command.
 
+Copy `./config/config.yml.example` to `./config/config.yml` and make some needed changes.
+
 ## Build
 
 ```sh

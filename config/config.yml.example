@@ -1,0 +1,3 @@
+port: "80"
+driver: postgres
+db: postgresql://postgres:postgres@localhost:5432/beetlefinder?sslmode=disable
