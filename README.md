@@ -1,11 +1,11 @@
-# BeetleFinder/Go-Server
+# beetlefinder/go-server
 
 [![Documentation][godoc-badge]][godoc]
 [![Build Status][travis-badge]][travis]
 [![Test Coverage][codecov-badge]][codecov]
 [![Code Quality][go-report-card-badge]][go-report-card]
 
-Server for beetlefinder alert service.
+Golang server for beetlefinder alert service.
 
 ## Requirements
 
